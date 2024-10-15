@@ -24,7 +24,7 @@ app = Flask(__name__)
 vector_store = Chroma(
     collection_name="test",
     embedding_function=OpenAIEmbeddings(),
-    persist_directory="../db/test"
+    persist_directory="./db/test"
 )
 
 class NamedBytesIO(io.BytesIO):
