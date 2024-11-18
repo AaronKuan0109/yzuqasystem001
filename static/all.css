@@ -113,7 +113,7 @@ img {
 }
 
 .user p {
-    background-color: #CFD9E6;
+    font-size:18px
     margin-right: 10px;
     padding: 20px;
 }
@@ -129,7 +129,8 @@ img {
 }
 
 .assistant p {
-    background-color: #D0CFE6;
+    font-size:18px
+    background-color: #CFD9E6;
     margin-left: 10px;
     border-radius: 3px;
     padding: 20px;
