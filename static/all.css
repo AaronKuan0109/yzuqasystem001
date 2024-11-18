@@ -113,7 +113,8 @@ img {
 }
 
 .user p {
-    font-size:18px
+    background-color: #CFD9E6;
+    font-size:20px;
     margin-right: 10px;
     padding: 20px;
 }
@@ -130,7 +131,7 @@ img {
 
 .assistant p {
     font-size: 20px; 
-    background-color: #CFD9E6;
+   
     margin-left: 10px;
     border-radius: 3px;
     padding: 20px;
