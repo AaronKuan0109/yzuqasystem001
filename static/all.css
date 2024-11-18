@@ -131,7 +131,10 @@ img {
 
 .assistant p {
     font-size: 20px; 
-   
+    /* 讓文字自動換行 */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+	
     margin-left: 10px;
     border-radius: 3px;
     padding: 20px;
