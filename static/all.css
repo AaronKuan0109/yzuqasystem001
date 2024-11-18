@@ -129,16 +129,13 @@ img {
 }
 
 .assistant p {
-    font-size:18px
+    font-size: 20px; 
     background-color: #CFD9E6;
     margin-left: 10px;
     border-radius: 3px;
     padding: 20px;
     line-height: 1.5;
-   
-
 }
-
 .chat-history {
     width: 100%;
     max-width: 100%;
