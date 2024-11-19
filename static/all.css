@@ -94,22 +94,7 @@ img {
 	
 }
 
-.center-title {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 30px;
-    font-weight: bolder;
-}
 
-/* 右上角標題 */
-.top-right-title {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-}
 
 .message {
     margin: 5px 0px;
