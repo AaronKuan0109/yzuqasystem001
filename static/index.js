@@ -74,8 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 隱藏範例問題的容器
     exampleQuestionsContainer.style.display = "none";
-    mainTitle.style.display = "none";
-    topRightTitle.style.display = "block";
+   
 
     // 顯示範例問題的功能
     function displayExampleQuestions(questions) {
