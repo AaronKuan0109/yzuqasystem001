@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 隱藏範例問題的容器
     exampleQuestionsContainer.style.display = "none";
+    
    
 
     // 顯示範例問題的功能
@@ -103,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // 清除範例問題
         exampleQuestionsContainer.style.display = "none";
+        mainTitle.style.display = "none";
+        topRightTitle.style.display = "block";
 
         const userMessageDiv = document.createElement("div");
         userMessageDiv.classList.add("message", "user");
