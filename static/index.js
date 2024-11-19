@@ -104,8 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // 清除範例問題
         exampleQuestionsContainer.style.display = "none";
-        mainTitle.style.display = "none";
-        topRightTitle.style.display = "block";
+       
 
         const userMessageDiv = document.createElement("div");
         userMessageDiv.classList.add("message", "user");
