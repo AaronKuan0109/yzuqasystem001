@@ -102,16 +102,11 @@ img {
     border-radius: 3px;
 }
 
-/* 正中間標題 */
 .center-title {
-    position: absolute; /* 絕對定位 */
-    top: 50%; /* 垂直中心點 */
-    left: 50%; /* 水平中心點 */
-    transform: translate(-50%, -50%); /* 修正中心偏移 */
-    font-size: 30px;
-    font-weight: bolder;
     text-align: center;
-    color: #333; /* 顏色可自行調整 */
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: bolder;
 }
 
 /* 右上角標題 */
