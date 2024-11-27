@@ -17,34 +17,33 @@ document.getElementById('stopBtn').addEventListener('click', stopRecording);
 let mediaRecorder;
 let audioChunks = [];
 const userInput = document.querySelector(".user-input");
-
-// 開始錄音功能
 function startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.start();
             audioChunks = [];
+
             mediaRecorder.addEventListener('dataavailable', event => {
                 audioChunks.push(event.data);
             });
+
             mediaRecorder.addEventListener('stop', () => {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const audioUrl = URL.createObjectURL(audioBlob);
                 uploadAudio(audioBlob);
             });
         })
         .catch(error => console.error('錄音啟動失敗:', error));
 }
 
-// 停止錄音功能
 function stopRecording() {
     if (mediaRecorder) {
         mediaRecorder.stop();
-        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());  // 停止所有軌道，關閉麥克風
     }
 }
 
-// 上傳音頻到伺服器(app.py)
 function uploadAudio(blob) {
     const formData = new FormData();
     formData.append('audio', blob, 'recording.wav');
@@ -64,17 +63,6 @@ function uploadAudio(blob) {
     })
     .catch(error => console.error('錯誤:', error));
 }
-
-// 新增訊息到對話框
-function appendMessageToChat(sender, message) {
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message", sender.toLowerCase());
-    messageDiv.innerHTML = `<p><strong>${sender}:</strong> ${message}</p>`;
-    chatHistory.appendChild(messageDiv);
-    chatHistory.scrollTop = chatHistory.scrollHeight; // 滾動到底部
-}
-////////////
-
 // 當網頁DOM內容被加載完成後，這個函數會被觸發
 document.addEventListener("DOMContentLoaded", function() {
     const chatForm = document.getElementById("chat-form");
