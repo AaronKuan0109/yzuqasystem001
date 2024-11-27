@@ -37,27 +37,7 @@ vector_store = Chroma(
 class NamedBytesIO(io.BytesIO):
     name = 'transcript.wav'  # 设置默认的文件名
 
-# 聊天历史记录的存储
-chat_history = []
 
-# 定义问题模板
-question_templates = {
-    "證明": [
-        "如何申請{keyword}？",
-        "{keyword}需要哪些文件？",
-        "{keyword}的用途是什麼？",
-        "辦理{keyword}的流程是什麼？",
-        "{keyword}需要多久可以拿到？"
-    ],
-    "申請": [
-        "申請{keyword}的流程是什麼？",
-        "{keyword}的條件有哪些？",
-        "辦理{keyword}需要多長時間？",
-        "{keyword}的審核標準是什麼？",
-        "{keyword}的辦理費用是多少？"
-    ],
-   
-}
 
 # 定义回答后处理函数
 def post_process_answer(answer_text):
@@ -95,11 +75,10 @@ def upload_audio():
     if not audio_file:
         return jsonify({'error': 'No audio file provided'}), 400
 
-    # 使用 NamedBytesIO 读取上传的音频文件
     audio_stream = NamedBytesIO(audio_file.read())
 
     try:
-        # Whisper API 转录音频
+        # 调用 Whisper API 转录
         transcript = client.audio.transcriptions.create(
             model="whisper-1",
             file=audio_stream,
@@ -107,9 +86,12 @@ def upload_audio():
         )
         cc = OpenCC('s2t')
         transcript_text = cc.convert(transcript)
+        print("轉錄成功:", transcript_text)  # 调试信息
         return jsonify({'transcript': transcript_text})
     except Exception as e:
+        print("轉錄失敗:", str(e))  # 调试信息
         return jsonify({'error': str(e)}), 500
+
     
 # 定义获取回答的路由，处理 POST 请求
 @app.route('/get_response', methods=['POST'])
