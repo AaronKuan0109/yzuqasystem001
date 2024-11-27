@@ -73,12 +73,10 @@ def index():
 def upload_audio():
     audio_file = request.files.get('audio')
     if not audio_file:
-        return jsonify({'error': 'No audio file provided'}), 400
-
-    audio_stream = NamedBytesIO(audio_file.read())
+        return jsonify({'error': '未提供音頻文件'}), 400
 
     try:
-        # 调用 Whisper API 转录
+        audio_stream = NamedBytesIO(audio_file.read())
         transcript = client.audio.transcriptions.create(
             model="whisper-1",
             file=audio_stream,
@@ -86,11 +84,10 @@ def upload_audio():
         )
         cc = OpenCC('s2t')
         transcript_text = cc.convert(transcript)
-        print("轉錄成功:", transcript_text)  # 调试信息
         return jsonify({'transcript': transcript_text})
     except Exception as e:
-        print("轉錄失敗:", str(e))  # 调试信息
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': f'音頻處理失敗: {str(e)}'}), 500
+
 
     
 # 定义获取回答的路由，处理 POST 请求
