@@ -65,6 +65,16 @@ function uploadAudio(blob) {
     .catch(error => console.error('錯誤:', error));
 }
 
+// 新增訊息到對話框
+function appendMessageToChat(sender, message) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message", sender.toLowerCase());
+    messageDiv.innerHTML = `<p><strong>${sender}:</strong> ${message}</p>`;
+    chatHistory.appendChild(messageDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight; // 滾動到底部
+}
+////////////
+
 // 當網頁DOM內容被加載完成後，這個函數會被觸發
 document.addEventListener("DOMContentLoaded", function() {
     const chatForm = document.getElementById("chat-form");
