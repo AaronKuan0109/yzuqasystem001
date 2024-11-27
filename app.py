@@ -91,20 +91,25 @@ def index():
     
 @app.route('/upload-audio', methods=['POST'])
 def upload_audio():
-    audio_file = request.files['audio']
-    if audio_file:
-        audio_stream = NamedBytesIO(audio_file.read())
-        audio_stream.name = 'transcript.wav' 
+    audio_file = request.files.get('audio')
+    if not audio_file:
+        return jsonify({'error': 'No audio file provided'}), 400
 
+    # 使用 NamedBytesIO 读取上传的音频文件
+    audio_stream = NamedBytesIO(audio_file.read())
+
+    try:
+        # Whisper API 转录音频
         transcript = client.audio.transcriptions.create(
             model="whisper-1",
             file=audio_stream,
-            response_format='text'
+            response_format="text"
         )
         cc = OpenCC('s2t')
-        text = cc.convert(transcript)
-        return jsonify({'message': '音頻已處理', 'transcript': text})
-    return jsonify({'error': '沒有接收到音訊文件'}), 400
+        transcript_text = cc.convert(transcript)
+        return jsonify({'transcript': transcript_text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
     
 # 定义获取回答的路由，处理 POST 请求
 @app.route('/get_response', methods=['POST'])
