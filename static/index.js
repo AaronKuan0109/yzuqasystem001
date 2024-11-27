@@ -45,7 +45,6 @@ function stopRecording() {
     }
 }
 
-// 上傳音頻到伺服器(app.py)
 function uploadAudio(blob) {
     const formData = new FormData();
     formData.append('audio', blob, 'recording.wav');
@@ -56,15 +55,17 @@ function uploadAudio(blob) {
     })
     .then(response => response.json())
     .then(data => {
+        console.log('Server response:', data); // 调试信息
         if (data.transcript) {
-            userInput.value = data.transcript; // 將語音轉文字結果填入輸入框
-            appendMessageToChat('You', data.transcript); // 在對話框顯示語音內容
+            userInput.value = data.transcript; // 将语音转文字结果填入输入框
+            appendMessageToChat('You', data.transcript); // 在对话框显示语音内容
         } else {
-            console.error('語音處理失敗:', data.message);
+            console.error('语音处理失败:', data.error || '未知错误');
         }
     })
-    .catch(error => console.error('錯誤:', error));
+    .catch(error => console.error('上传音频时发生错误:', error));
 }
+
 
 // 新增訊息到對話框
 function appendMessageToChat(sender, message) {
