@@ -16,7 +16,7 @@ document.getElementById('stopBtn').addEventListener('click', stopRecording);
 let mediaRecorder;
 let audioChunks = [];
 const userInput = document.querySelector(".user-input");
-
+const chatHistory = document.querySelector(".chat-history");
 
 function startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true })
