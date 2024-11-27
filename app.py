@@ -37,7 +37,7 @@ vector_store = Chroma(
 class NamedBytesIO(io.BytesIO):
     name = 'transcript.wav'  # 设置默认的文件名
 
-
+chat_history = []
 
 # 定义回答后处理函数
 def post_process_answer(answer_text):
