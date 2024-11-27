@@ -69,24 +69,7 @@ def post_process_answer(answer_text):
 def index():
     return render_template('index.html')
     
-@app.route('/upload-audio', methods=['POST'])
-def upload_audio():
-    audio_file = request.files.get('audio')
-    if not audio_file:
-        return jsonify({'error': '未提供音頻文件'}), 400
 
-    try:
-        audio_stream = NamedBytesIO(audio_file.read())
-        transcript = client.audio.transcriptions.create(
-            model="whisper-1",
-            file=audio_stream,
-            response_format="text"
-        )
-        cc = OpenCC('s2t')
-        transcript_text = cc.convert(transcript)
-        return jsonify({'transcript': transcript_text})
-    except Exception as e:
-        return jsonify({'error': f'音頻處理失敗: {str(e)}'}), 500
 
 
     
@@ -145,6 +128,23 @@ def get_response():
 
     # 返回生成的回答和範例問題
     return jsonify({'response': answer})
+
+@app.route('/upload-audio', methods=['POST'])
+def upload_audio():
+    audio_file = request.files['audio']
+    if audio_file:
+        audio_stream = NamedBytesIO(audio_file.read())
+        audio_stream.name = 'transcript.wav' 
+
+        transcript = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=audio_stream,
+            response_format='text'
+        )
+        cc = OpenCC('s2t')
+        text = cc.convert(transcript)
+        return jsonify({'message': '音頻已處理', 'transcript': text})
+    return jsonify({'error': '沒有接收到音訊文件'}), 400
 
 # 运行 Flask 应用，设置调试模式和端口号
 if __name__ == '__main__':
