@@ -10,38 +10,39 @@ function copyText(text) {
     }
 }
 
-// 讓錄音按鈕添加事件監聽器
 document.getElementById('startBtn').addEventListener('click', startRecording);
 document.getElementById('stopBtn').addEventListener('click', stopRecording);
 
 let mediaRecorder;
 let audioChunks = [];
 const userInput = document.querySelector(".user-input");
-const chatHistory = document.querySelector(".chat-history");
 
-// 開始錄音功能
+
 function startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.start();
             audioChunks = [];
+            console.log("錄音開始");
+
             mediaRecorder.addEventListener('dataavailable', event => {
                 audioChunks.push(event.data);
             });
+
             mediaRecorder.addEventListener('stop', () => {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 uploadAudio(audioBlob);
             });
         })
-        .catch(error => console.error('錄音啟動失敗:', error));
+        .catch(error => console.error('無法開始錄音:', error));
 }
 
-// 停止錄音功能
 function stopRecording() {
     if (mediaRecorder) {
         mediaRecorder.stop();
         mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        console.log("錄音結束");
     }
 }
 
@@ -55,26 +56,24 @@ function uploadAudio(blob) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Server response:', data); // 调试信息
         if (data.transcript) {
-            userInput.value = data.transcript; // 将语音转文字结果填入输入框
-            appendMessageToChat('You', data.transcript); // 在对话框显示语音内容
+            userInput.value = data.transcript; // 將語音轉文字結果填入輸入框
+            appendMessageToChat('You', data.transcript); // 在對話框顯示語音內容
         } else {
-            console.error('语音处理失败:', data.error || '未知错误');
+            console.error('語音轉文字失敗:', data.message);
         }
     })
-    .catch(error => console.error('上传音频时发生错误:', error));
+    .catch(error => console.error('上傳語音時出錯:', error));
 }
 
-
-// 新增訊息到對話框
 function appendMessageToChat(sender, message) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message", sender.toLowerCase());
     messageDiv.innerHTML = `<p><strong>${sender}:</strong> ${message}</p>`;
     chatHistory.appendChild(messageDiv);
-    chatHistory.scrollTop = chatHistory.scrollHeight; // 滾動到底部
+    chatHistory.scrollTop = chatHistory.scrollHeight; // 滾動到最新消息
 }
+
 // 當網頁DOM內容被加載完成後，這個函數會被觸發
 document.addEventListener("DOMContentLoaded", function() {
     const chatForm = document.getElementById("chat-form");
