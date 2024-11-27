@@ -88,7 +88,24 @@ def post_process_answer(answer_text):
 @app.route('/')
 def index():
     return render_template('index.html')
+    
+@app.route('/upload-audio', methods=['POST'])
+def upload_audio():
+    audio_file = request.files['audio']
+    if audio_file:
+        audio_stream = NamedBytesIO(audio_file.read())
+        audio_stream.name = 'transcript.wav' 
 
+        transcript = client.audio.transcriptions.create(
+            model="whisper-1",
+            file=audio_stream,
+            response_format='text'
+        )
+        cc = OpenCC('s2t')
+        text = cc.convert(transcript)
+        return jsonify({'message': '音頻已處理', 'transcript': text})
+    return jsonify({'error': '沒有接收到音訊文件'}), 400
+    
 # 定义获取回答的路由，处理 POST 请求
 @app.route('/get_response', methods=['POST'])
 def get_response():
