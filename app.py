@@ -139,7 +139,8 @@ def upload_audio():
         transcript = client.audio.transcriptions.create(
             model="whisper-1",
             file=audio_stream,
-            response_format='text'
+            response_format='text',
+            language="zh"  # 指定中文
         )
         cc = OpenCC('s2t')
         text = cc.convert(transcript)
