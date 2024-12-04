@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>教務處QA系統</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/all.css">
+</head>
+<body>
+    <header>
+        <h2 class="logo"></h2>
+        <h1 id="right-title" class="right-title" "></h1>
+    </header>
+    <main class="wrap">
+        <div class="chat-area">
+            
+            <div class="chat-history">
+            <h1 id="main-title" class="center-title">Academic Affairs QA System
+                <br>
+                ----------------------------------------------
+                <br>
+                <span class="subtitle">Ask Anytime, Solve Anywhere</span>
+            </h1>
+            </div>
+
+            <!-- 新增範例問題容器：改至 chat-history 下方，保持範例問題在下方顯示 -->
+            <div class="example-questions"></div> 
+
+            <form action="/get_response" method="post" accept-charset="UTF-8" id="chat-form">
+                <input type="text" class="user-input" placeholder="Ask a question..." name="user_input">
+                <button type="button" id="recordingBtn"><i class="fa-solid fa-microphone"></i></button>
+                <button type="submit" class="send-button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </form>
+        </div>    
+    </main>
+    <script src="../static/index.js"></script>
+</body>
+</html>
+
