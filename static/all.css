@@ -204,7 +204,7 @@ img {
     max-width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 75vh;
+    height: 65vh;
     margin: 0 auto;
     word-wrap: break-word;
 }
@@ -361,7 +361,7 @@ button i {
     }
 
     .chat-history {
-        height: 75vh;
+        height: 65vh;
         overflow-y: auto;
         overflow-x: hidden;
     }
@@ -387,7 +387,7 @@ button i {
     }
 
     .chat-history {
-        height: 80vh;
+        height: 65vh;
         overflow-y: auto;
         overflow-x: hidden;
     }
